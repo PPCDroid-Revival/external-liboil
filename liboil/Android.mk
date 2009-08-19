@@ -13,7 +13,6 @@ LOCAL_SRC_FILES:= \
         liboilrandom.c      \
         liboiltest.c        \
         liboilutils.c       \
-        liboilcpu-arm.c     \
         ./android/liboil/liboilarray.c       \
 	./c/ag_clamp.c      \
 	./c/composite.c     \
@@ -104,8 +103,18 @@ LOCAL_SRC_FILES:= \
         ./deprecated/tablelookup.c  \
         ./deprecated/vectoradd_f64.c    \
         ./deprecated/vectoradd_s.c  \
+
+ifeq ($(TARGET_ARCH),arm)
+LOCAL_SRC_FILES +=		\
         ./arm/math_vfp_asm.S        \
         ./arm/math_vfp.c            \
+        liboilcpu-arm.c     
+endif
+
+ifeq ($(TARGET_ARCH),mips)
+LOCAL_SRC_FILES +=		\
+        liboilcpu-misc.c     
+endif
 
 LOCAL_SHARED_LIBRARIES := libm
 
